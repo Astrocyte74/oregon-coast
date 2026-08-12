@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<meta name='robots' content='noindex,nofollow'>
+<title>The Oregon Coast</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Caveat:wght@500;600;700&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap');
+:root{
+  --paper:#F2E6CB;--ink:#2A2118;--terracotta:#C25B3A;--ochre:#C99A3C;--sage:#6E7F4F;--soft:#7A6A55;
+  --sea:#dfe8e0;--land:#f6efdc;--river:#a8c0d4;--riverink:#6f8ba3;
+/* ---------- coast ---------- */
+section.region{padding:34px 0 8px;}
+.region-tag{font-family:'Caveat',cursive;font-size:22px;color:var(--sage);}
+.region-head{position:relative;display:inline-block;margin-bottom:4px;}
+h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(30px,5vw,40px);line-height:1;margin:0;letter-spacing:-.02em;text-transform:uppercase;}
+.scribble{display:block;margin-top:2px;}
+/* stops hang off a dashed route spine; the legs between them are the journey */
+.stop{margin:0 0 6px;padding-left:38px;position:relative;}
+.stop::before{content:"";position:absolute;left:11px;top:9px;width:11px;height:11px;
+  border-radius:50%;background:var(--paper);border:2px solid var(--terracotta);}
+.stop::after{content:"";position:absolute;left:16px;top:24px;bottom:-8px;
+  border-left:2px dashed var(--route);opacity:.45;}
+.stop:last-child::after{display:none;}
+.stop-time{font-family:'Caveat',cursive;font-size:21px;color:var(--terracotta);display:block;margin-bottom:2px;line-height:1;}
+.stop-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:22px;margin:0;letter-spacing:-.01em;}
+.stop-blurb{margin:4px 0 0;font-size:16.5px;max-width:62ch;}
+.maps{display:inline-flex;gap:0 14px;margin-top:6px;}
+.maplink{font-family:'Caveat',cursive;font-size:21px;color:var(--terracotta);text-decoration:none;white-space:nowrap;}
+.maplink:hover{color:var(--ochre);}
+/* a leg of the journey: dashed spine + mode badge + arrowhead into the next stop */
+.connector{
+  position:relative;margin:0 0 6px;padding:10px 0 12px 38px;min-height:46px;
+  display:flex;align-items:center;
+  font-family:'Caveat',cursive;font-size:19px;color:var(--soft);
+}
+.connector::before{content:"";position:absolute;left:16px;top:0;bottom:0;
+  border-left:2px dashed var(--route);opacity:.45;}
+.connector::after{content:"";position:absolute;left:12px;bottom:-4px;width:0;height:0;
+  border-left:5px solid transparent;border-right:5px solid transparent;
+  border-top:7px solid var(--route);opacity:.55;}
+.connector .mode{position:absolute;left:5px;top:50%;transform:translateY(-50%);
+  width:22px;height:22px;padding:3px;background:var(--paper);border-radius:50%;
+  color:var(--route);}
+/* a bigger jump — between regions */
+.connector.major{padding:16px 0 18px 38px;min-height:58px;font-size:20px;margin:12px 0 2px;}
+.connector.major::before{border-left-color:var(--terracotta);opacity:.5;}
+.connector.major::after{border-top-color:var(--terracotta);opacity:.65;}
+.connector.major .mode{color:var(--terracotta);}
+.connector.major .to{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
+  font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--terracotta);
+  margin-right:9px;white-space:nowrap;}
+.section-break{display:flex;align-items:center;gap:16px;margin:44px 0 6px;}
+.section-break::before,.section-break::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(to right,var(--soft) 0 5px,transparent 5px 10px);}
+.break-label{font-family:'Caveat',cursive;font-size:26px;color:var(--sage);white-space:nowrap;}
+.coast-wrap{display:block;}
+.map-aside{margin:8px 0 18px;}
+.coast-map{display:block;width:250px;max-width:80%;height:auto;margin:0 auto;}
+.map-cap{font-family:'Caveat',cursive;font-size:17px;color:var(--soft);text-align:center;margin:6px 0 0;}
+
+/* map interactions */
+.map-pin{cursor:pointer;}
+.map-pin .halo{fill:rgba(194,91,58,0);transition:fill .25s ease;}
+.map-pin .dot{fill:var(--paper);stroke:var(--ink);stroke-width:2;transition:fill .25s ease,stroke .25s ease;}
+.map-pin text,.map-pin .leader{transition:fill .25s ease,stroke .25s ease;}
+.map-pin:hover .dot{fill:var(--ochre);}
+.map-pin:focus{outline:none;}
+.map-pin:focus-visible .halo{fill:rgba(194,91,58,0.18);}
+.map-pin:focus-visible .dot{stroke:var(--terracotta);}
+.map-pin.active .halo{fill:rgba(194,91,58,0.18);}
+.map-pin.active .dot{fill:var(--terracotta);stroke:var(--terracotta);}
+.map-pin.active text{fill:var(--terracotta);}
+.map-pin.active .leader{stroke:var(--terracotta);}
+
+@media (min-width:1000px){
+  .coast-wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:56px;align-items:start;}
+  .map-aside{grid-column:2;grid-row:1;position:sticky;top:22px;align-self:start;margin:0;}
+  .coast-regions{grid-column:1;grid-row:1;}
+  .coast-map{width:100%;max-width:none;}
+}
+@media print{
+  .wrap{max-width:none;padding:0;}
+  h1.title{font-size:42px;}
+  .wave{margin:12px 0 10px;}
+  nav.tabs{display:none;}          /* navigation is useless on paper */
+  .map-cap{display:none;}
+  .section-break{margin:24px 0 4px;}
+  section.region{padding:20px 0 6px;break-inside:auto;}
+  .region-head{break-after:avoid;}
+  .stop{break-inside:avoid;}
+  .coast-wrap{display:block;}
+  .map-aside{position:static;margin:0 0 16px;break-inside:avoid;}
+  .coast-map{width:300px;max-width:64%;}
+  .map-pin .dot{fill:var(--paper) !important;stroke:var(--ink) !important;}
+  .map-pin text{fill:var(--ink) !important;}
+  .wed-alert{background:transparent !important;color:var(--ink) !important;border:1.5px solid var(--ink);}
+  .print-btn{display:none;}
+}
+footer{margin-top:40px;padding-top:18px;border-top:2px dashed var(--soft);text-align:center;}
+.print-btn{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;background:var(--terracotta);color:#fff;border:none;padding:9px 16px;border-radius:2px 10px 2px 10px;cursor:pointer;}
+.print-btn:hover{background:var(--ochre);}
+@media (max-width:560px){
+  :root{--pad:18px;}
+  .wrap{padding:44px var(--pad) 56px;}
+  h1.title{font-size:48px;}
+}
+
+.mapicon{margin-left:.34em;display:inline-block;position:relative;color:var(--terracotta);text-decoration:none;vertical-align:-.08em;transition:color .15s;}
+.mapicon:hover{color:var(--ochre);}
+/* the glyph stays small; the tap target must not be (WCAG 2.5.8 wants >=24x24) */
+.mapicon::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:40px;height:40px;}
+.mapicon:focus-visible{outline:2px solid var(--terracotta);outline-offset:3px;border-radius:2px;}
+.pin{width:.92em;height:.92em;display:block;}
+h3.stop-name .pin{width:.8em;height:.8em;}
+.ext{width:.8em;height:.8em;display:block;}
+.pinpair{display:inline-flex;align-items:center;gap:16px;margin-top:6px;}
+.mapgroup{display:inline-flex;align-items:center;gap:3px;}
+.pinlab{font-family:'Caveat',cursive;font-size:19px;color:var(--soft);font-style:normal;}</style>
+</head>
+<body>
+<svg width='0' height='0' style='position:absolute;width:0;height:0;overflow:hidden' aria-hidden='true'><symbol id='i-pin' viewBox='0 0 24 24'><path d='M12 2.2c-4 0-7.2 3.2-7.2 7.2 0 5.4 7.2 12.4 7.2 12.4s7.2-7 7.2-12.4c0-4-3.2-7.2-7.2-7.2z' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'/><circle cx='12' cy='9.4' r='2.5' fill='none' stroke='currentColor' stroke-width='1.8'/></symbol>
+<symbol id='i-walk' viewBox='0 0 24 24'><g fill='currentColor'><ellipse cx='7.8' cy='9.2' rx='3.1' ry='4.5' transform='rotate(-14 7.8 9.2)'/><circle cx='10.3' cy='4' r='1.35'/><ellipse cx='16' cy='16.4' rx='3.1' ry='4.5' transform='rotate(-14 16 16.4)'/><circle cx='18.5' cy='11.2' r='1.35'/></g></symbol>
+<symbol id='i-car' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3.4 15.4 L5 10.6 C5.3 9.9 5.9 9.5 6.6 9.5 L15.3 9.5 C16 9.5 16.6 9.8 17 10.4 L19.6 14.6'/><path d='M3.4 15.4 L20.4 15.4 L20.4 17.8 L3.4 17.8 Z'/><circle cx='7.4' cy='17.8' r='1.9'/><circle cx='16.6' cy='17.8' r='1.9'/></g></symbol>
+<symbol id='i-bed' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 18.6 L3 7.4'/><path d='M3 12.2 L15.4 12.2 C18.4 12.2 20.8 13.6 20.8 15.8 L20.8 18.6'/><path d='M3 15.6 L20.8 15.6'/><circle cx='7.6' cy='9.6' r='1.7'/></g></symbol>
+<symbol id='i-bridge' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2.4 17.6 L21.6 17.6'/><path d='M2.6 13.4 C7.2 7.8, 16.8 7.8, 21.4 13.4'/><path d='M7 10.4 L7 17.6'/><path d='M12 8.4 L12 17.6'/><path d='M17 10.4 L17 17.6'/></g></symbol><symbol id='i-ext' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7'/><path d='M15 4h5v5'/><path d='M10 14L20 4'/></g></symbol></svg>
+<div class='wrap'>
+<div class='hero'>
+<h1 class='title'>the Oregon<br>coast.</h1>
+</div>
+<svg class='wave' viewBox='0 0 600 14' preserveAspectRatio='none'><path d='M0 7 Q 25 0 50 7 T 100 7 T 150 7 T 200 7 T 250 7 T 300 7 T 350 7 T 400 7 T 450 7 T 500 7 T 550 7 T 600 7' fill='none' stroke='currentColor' stroke-width='1.6'/></svg>
+<div class='section-break'><span class='break-label'>~ the coast ~</span></div>
+<nav class='tabs'><a href='#cape-disappointment'>Cape Disappointment</a><a href='#astoria'>Astoria</a><a href='#fort-stevens'>Fort Stevens</a><a href='#cannon-beach'>Cannon Beach</a><a href='#tillamook'>Tillamook</a></nav>
+<div class='coast-wrap'>
+<aside class='map-aside' aria-label='Map of the coast'>
+<svg class='coast-map' viewBox='0 0 340 520' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Hand-drawn map of the northern Oregon coast and the Long Beach Peninsula in Washington. Cape Disappointment sits at the southern tip of the peninsula on the north bank of the Columbia River mouth; Fort Stevens is on the ocean beach on the south bank; Astoria lies upriver to the east, reached by the long bridge. South along the coast are Cannon Beach and, further on, Tillamook. A dashed line traces the driving route.'>
+  <!-- water ground -->
+  <rect x='0' y='0' width='340' height='520' fill='#dfe8e0'/>
+
+  <!-- land: Long Beach Peninsula + WA mainland + Oregon coast (river painted over the mouth) -->
+  <path d='M76 -4
+           C 79 30, 77 70, 74 104
+           C 72 124, 71 142, 69 158
+           C 66 164, 63 166, 62 170
+           C 64 176, 72 178, 80 183
+           C 88 190, 97 196, 106 200
+           C 104 206, 103 210, 104 216
+           C 108 232, 116 248, 126 262
+           C 132 272, 136 280, 137 289
+           C 130 296, 122 300, 115 307
+           C 116 314, 118 320, 120 326
+           C 121 332, 122 338, 124 346
+           C 127 358, 129 368, 128 378
+           C 130 388, 134 396, 134 404
+           C 133 414, 131 420, 128 428
+           C 140 432, 152 440, 156 450
+           C 157 461, 149 469, 139 469
+           C 129 468, 122 461, 119 452
+           C 117 460, 115 468, 114 476
+           C 118 492, 124 508, 127 524
+           L 344 524 L 344 -4 Z' fill='#f6efdc'/>
+
+  <!-- Willapa Bay, behind the peninsula -->
+  <path d='M98 -4 C 96 30, 95 66, 95 100 C 96 118, 98 132, 101 144
+           C 110 138, 116 128, 120 116 C 124 94, 125 58, 121 24
+           C 119 12, 117 2, 116 -4 Z' fill='#dfe8e0'/>
+
+  <!-- Columbia River, tapering upstream and running off the frame -->
+  <path d='M80 183 C 104 187, 134 191, 168 194 C 210 198, 275 202, 344 204
+           L 344 219
+           C 285 216, 226 213, 190 211
+           C 178 216, 168 218, 158 213
+           C 146 208, 124 203, 106 200 Z' fill='#a8c0d4'/>
+
+  <!-- ocean texture -->
+  <g stroke='#a9bfae' stroke-width='1.4' fill='none' stroke-linecap='round'>
+    <path d='M12 92 q4 -3 8 0 t8 0'/><path d='M18 258 q4 -3 8 0 t8 0'/>
+    <path d='M14 336 q4 -3 8 0 t8 0'/><path d='M22 486 q4 -3 8 0 t8 0'/>
+  </g>
+  <text x='20' y='420' font-family='Caveat,cursive' font-size='16' fill='#8a9a7a' transform='rotate(-90 20 420)'>the Pacific</text>
+
+  <!-- coastline ink: peninsula down to Cape Disappointment -->
+  <path d='M76 -4 C 79 30, 77 70, 74 104 C 72 124, 71 142, 69 158
+           C 66 164, 63 166, 62 170 C 64 176, 72 178, 80 183'
+        fill='none' stroke='#2A2118' stroke-width='2.2' stroke-linecap='round'/>
+  <!-- coastline ink: Oregon, Clatsop Spit south past Tillamook -->
+  <path d='M106 200 C 104 206, 103 210, 104 216
+           C 108 232, 116 248, 126 262 C 132 272, 136 280, 137 289
+           C 130 296, 122 300, 115 307 C 116 314, 118 320, 120 326
+           C 121 332, 122 338, 124 346 C 127 358, 129 368, 128 378
+           C 130 388, 134 396, 134 404 C 133 414, 131 420, 128 428
+           C 140 432, 152 440, 156 450 C 157 461, 149 469, 139 469
+           C 129 468, 122 461, 119 452 C 117 460, 115 468, 114 476
+           C 118 492, 124 508, 127 524'
+        fill='none' stroke='#2A2118' stroke-width='2.2' stroke-linecap='round'/>
+  <!-- Willapa Bay shore -->
+  <path d='M101 144 C 110 138, 116 128, 120 116 C 124 94, 125 58, 121 24 C 119 12, 117 2, 116 -4'
+        fill='none' stroke='#2A2118' stroke-width='1.2' stroke-linecap='round' opacity='.55'/>
+  <path d='M98 -4 C 96 30, 95 66, 95 100 C 96 118, 98 132, 101 144'
+        fill='none' stroke='#2A2118' stroke-width='1.2' stroke-linecap='round' opacity='.55'/>
+  <!-- river banks -->
+  <path d='M80 183 C 104 187, 134 191, 168 194 C 210 198, 275 202, 344 204'
+        fill='none' stroke='#6f8ba3' stroke-width='1.4'/>
+  <path d='M106 200 C 124 203, 146 208, 158 213 C 168 218, 178 216, 190 211 C 226 213, 285 216, 344 219'
+        fill='none' stroke='#6f8ba3' stroke-width='1.4'/>
+  <!-- Bayocean Spit, sheltering Tillamook Bay -->
+  <path d='M126 432 C 124 440, 123 448, 124 455'
+        fill='none' stroke='#2A2118' stroke-width='1.4' stroke-linecap='round' opacity='.5'/>
+
+  <!-- Haystack Rock &amp; friends, offshore at Cannon Beach -->
+  <path d='M110 334 l4 -11 l4 11 z' fill='#2A2118' opacity='.75'/>
+  <path d='M103 340 l2.5 -6 l2.5 6 z' fill='#2A2118' opacity='.55'/>
+
+  <!-- the driving route -->
+  <path d='M76 132 C 78 156, 79 170, 82 180
+           C 108 188, 140 191, 174 195
+           L 189 209
+           C 176 219, 162 224, 152 227
+           C 143 245, 140 266, 137 289
+           C 130 306, 125 316, 121 328
+           C 125 350, 128 372, 128 382
+           C 132 400, 131 414, 130 424
+           C 142 424, 158 434, 168 446
+           C 175 454, 177 460, 177 463'
+        fill='none' stroke='#9C7B4E' stroke-width='1.7' stroke-linecap='round'
+        stroke-dasharray='5 4' opacity='.6'/>
+  <path d='M152 227 C 132 225, 116 219, 107 216'
+        fill='none' stroke='#9C7B4E' stroke-width='1.7' stroke-linecap='round'
+        stroke-dasharray='5 4' opacity='.6'/>
+  <!-- the bridge -->
+  <g stroke='#2A2118' stroke-width='1.6' stroke-linecap='round' opacity='.85'>
+    <path d='M174 195 L 189 209'/>
+    <path d='M176 197 L 179 194'/><path d='M181 202 L 184 199'/><path d='M186 206 L 189 203'/>
+  </g>
+  <text x='200' y='190' font-family='Caveat,cursive' font-size='13' fill='#5d7791'>the big bridge</text>
+
+  <!-- inland: the Coast Range &amp; the Willapa Hills -->
+  <g stroke='#c9bda2' stroke-width='1.3' fill='none' stroke-linecap='round' opacity='.8'>
+    <path d='M236 74 l7 -9 l7 9'/><path d='M250 80 l6 -8 l6 8'/><path d='M266 62 l7 -9 l7 9'/>
+    <path d='M232 306 l7 -9 l7 9'/><path d='M246 312 l6 -8 l6 8'/><path d='M262 296 l7 -9 l7 9'/>
+    <path d='M238 372 l7 -9 l7 9'/><path d='M252 378 l6 -8 l6 8'/>
+    <path d='M228 442 l7 -9 l7 9'/><path d='M242 448 l6 -8 l6 8'/><path d='M258 430 l7 -9 l7 9'/>
+  </g>
+  <text x='296' y='352' font-family='Caveat,cursive' font-size='12' fill='#a89a80' text-anchor='middle' transform='rotate(-90 296 352)'>the Coast Range</text>
+
+  <!-- place context -->
+  <text x='246' y='214' font-family='Caveat,cursive' font-size='11.5' fill='#eef4f8'>Columbia River</text>
+  <text x='130' y='112' font-family='Caveat,cursive' font-size='13' fill='#9a8e76'>Long Beach</text>
+  <text x='108' y='104' font-family='Caveat,cursive' font-size='11' fill='#7e9aa8' text-anchor='middle' transform='rotate(-90 108 104)'>Willapa Bay</text>
+  <text x='150' y='296' font-family='Caveat,cursive' font-size='13' fill='#9a8e76'>Seaside</text>
+  <text x='302' y='175' font-family='Caveat,cursive' font-size='15' fill='#9a8e76'>WA</text>
+  <text x='302' y='244' font-family='Caveat,cursive' font-size='15' fill='#9a8e76'>OR</text>
+
+  <!-- compass -->
+  <g transform='translate(28,34)'>
+    <circle r='13' fill='#dfe8e0' stroke='#2A2118' stroke-width='1.2'/>
+    <path d='M0 -9 L3.5 0 L0 9 L-3.5 0 Z' fill='#2A2118'/>
+    <text x='0' y='-17' font-family='Caveat,cursive' font-size='13' fill='#2A2118' text-anchor='middle'>N</text>
+  </g>
+
+  <!-- pins -->
+  <g class='map-pin' data-region='cape-disappointment' tabindex='0' role='link' aria-label='Cape Disappointment'>
+    <path class='leader' d='M86 178 L 118 155' fill='none' stroke='#2A2118' stroke-width='1.2' opacity='.55'/>
+    <circle class='halo' cx='79' cy='182' r='12'/><circle class='dot' cx='79' cy='182' r='4.5'/>
+    <text x='122' y='151' font-family='Caveat,cursive' font-size='17' fill='#2A2118'>Cape Disappointment</text>
+    <text x='122' y='165' font-family='Caveat,cursive' font-size='13' fill='#9C4A3E'>the favorite ♥</text>
+  </g>
+  <g class='map-pin' data-region='fort-stevens' tabindex='0' role='link' aria-label='Fort Stevens'>
+    <circle class='halo' cx='105' cy='214' r='12'/><circle class='dot' cx='105' cy='214' r='4.5'/>
+    <text x='95' y='218' text-anchor='end' font-family='Caveat,cursive' font-size='17' fill='#2A2118'>Fort Stevens</text>
+  </g>
+  <g class='map-pin' data-region='astoria' tabindex='0' role='link' aria-label='Astoria'>
+    <circle class='halo' cx='190' cy='212' r='12'/><circle class='dot' cx='190' cy='212' r='4.5'/>
+    <text x='200' y='227' font-family='Caveat,cursive' font-size='17' fill='#2A2118'>Astoria</text>
+  </g>
+  <g class='map-pin' data-region='cannon-beach' tabindex='0' role='link' aria-label='Cannon Beach'>
+    <circle class='halo' cx='121' cy='329' r='12'/><circle class='dot' cx='121' cy='329' r='4.5'/>
+    <text x='133' y='328' font-family='Caveat,cursive' font-size='17' fill='#2A2118'>Cannon Beach</text>
+  </g>
+  <g class='map-pin' data-region='tillamook' tabindex='0' role='link' aria-label='Tillamook'>
+    <circle class='halo' cx='176' cy='466' r='12'/><circle class='dot' cx='176' cy='466' r='4.5'/>
+    <text x='188' y='465' font-family='Caveat,cursive' font-size='17' fill='#2A2118'>Tillamook</text>
+  </g>
+</svg>
+<p class='map-cap'>~ tap a pin ~</p>
+</aside>
+<div class='coast-regions'>
+<section class='region' id='cape-disappointment'>
+<div class='region-head'>
+<h2 class='region-title'>Cape Disappointment</h2>
+<svg class='scribble' viewBox='0 0 220 10' width='220' height='10'><path d='M2 6 Q 40 1 80 5 T 160 6 T 218 5' fill='none' stroke='#C25B3A' stroke-width='2.6' stroke-linecap='round'/></svg>
+</div>
+<div class='stop'>
+<h3 class='stop-name'>Lewis &amp; Clark Interpretive Center<a class='mapicon' href='https://maps.app.goo.gl/sLUKhcub6tNkXhES7' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Park here. Really cool museum about the area and the expedition, and the balcony has amazing views.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>15-min walk + a climb</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Cape Disappointment Lighthouse<a class='mapicon' href='https://maps.app.goo.gl/fHihDYo1MGmKwxu86' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Walk out from the L&amp;C center — about 15 min, with a fairly good climb for part of it. Oldest lighthouse on the West Coast, looking out over the Columbia bar, the “Graveyard of the Pacific” (literally).</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>short detour off the trail</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Deadman's Cove<a class='mapicon' href='https://maps.app.goo.gl/JeztDEKGcEGnLqvV8' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Off the lighthouse trail — a quiet, driftwood-strewn cove. Worth the scramble down and the climb back out.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>6 min drive</span></div>
+<div class='stop'>
+<h3 class='stop-name'>North Head Lighthouse<a class='mapicon' href='https://maps.app.goo.gl/5eFYJ42tWiBdJ8R97' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Yes, worth doing even though you JUST did a lighthouse. Easier walk, no real climb. One of the best sunset spots on the peninsula.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>15 min up the coast</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Cranberry Museum<a class='mapicon' href='https://maps.app.goo.gl/1hk6LdQC3PEoK7Sc6' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>More gift shop than museum, but you can walk around a working cranberry bog — pretty interesting to see how it all works.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>5 min drive</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Marsh's Free Museum, Long Beach<a class='mapicon' href='https://maps.app.goo.gl/4qZeWbT4qxV16jPh7' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Long Beach has a nice boardwalk and shops; Marsh's is the must-do — crazy stuff crammed into every corner, including “Jake the Alligator Man.” It's free, it's weird, go in.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-bed'/></svg><span>to stay the night</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Pearl Inn Bed &amp; Breakfast<a class='mapicon' href='https://thepearlinnbb.com/' target='_blank' rel='noopener' aria-label='Website' title='Website'><svg class='ext' aria-hidden='true'><use href='#i-ext'/></svg></a></h3>
+<p class='stop-blurb'>A great place to stay for a night in the area.</p>
+</div>
+</section>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-bridge'/></svg><span class='to'>Astoria</span><span>cross the river — crazy bridge (it used to be a deadly ferry!)</span></div>
+<section class='region' id='astoria'>
+<div class='region-head'>
+<h2 class='region-title'>Astoria</h2>
+<svg class='scribble' viewBox='0 0 220 10' width='220' height='10'><path d='M2 6 Q 40 1 80 5 T 160 6 T 218 5' fill='none' stroke='#C25B3A' stroke-width='2.6' stroke-linecap='round'/></svg>
+</div>
+<div class='stop'>
+<h3 class='stop-name'>Astoria Column<a class='mapicon' href='https://maps.app.goo.gl/p8BGnJEGBq9yJwJ77' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Climb the spiral staircase for views over the Columbia mouth, the bridge to Washington, and — on a clear day — Mt. Rainier and Mt. St. Helens. Deer wander the grounds. Buy a wooden glider from the gift shop before you climb — you won't want the stairs twice.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>5 min down the hill</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Columbia River Maritime Museum<a class='mapicon' href='https://maps.app.goo.gl/VAa6m58Vk6TpR2St9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Genuinely amazing museum — shipwrecks, the Coast Guard, and the story of the Columbia River bar, a.k.a. the “Graveyard of the Pacific.”</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>5 min walk along the river</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Riverwalk &amp; Frite &amp; Scoop<a class='mapicon' href='https://maps.app.goo.gl/9o7wvvrovby7HafF9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>The quick visit: stroll the Astoria Riverwalk along the water and grab ice cream at Frite &amp; Scoop.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>10 min walk</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Pier 39 &amp; Hanthorn Cannery Museum</h3>
+<p class='stop-blurb'>A cool restored 1875 cannery — shops and a small hotel now. If it's quiet you can drive right out onto the pier on a slightly rickety bridge (fun). Free cannery museum inside — quick and genuinely interesting. Sea lions sometimes hang out here.</p>
+<span class='pinpair'><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/h3Q2uJgfA6MzeUP28' target='_blank' rel='noopener' aria-label='Pier — open in Maps' title='Pier'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>Pier</i></span><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/wtu5kckq93bMQWx89' target='_blank' rel='noopener' aria-label='Museum — open in Maps' title='Museum'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>Museum</i></span></span>
+</div>
+</section>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Fort Stevens</span><span>10 min out to the mouth</span></div>
+<section class='region' id='fort-stevens'>
+<div class='region-head'>
+<h2 class='region-title'>Fort Stevens</h2>
+<svg class='scribble' viewBox='0 0 220 10' width='220' height='10'><path d='M2 6 Q 40 1 80 5 T 160 6 T 218 5' fill='none' stroke='#C25B3A' stroke-width='2.6' stroke-linecap='round'/></svg>
+</div>
+<div class='stop'>
+<h3 class='stop-name'>Wreck of the Peter Iredale<a class='mapicon' href='https://maps.app.goo.gl/gDjUsHRttY84qKPM6' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>An old shipwreck half-buried in the sand — a 1906 schooner, just the rusted ribs left. Super cool to see. You can drive right on the beach in parts (you could last time, at least — worth checking it's still allowed).</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>7 min away</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Battery Russell<a class='mapicon' href='https://maps.app.goo.gl/iuYziupEZXqxpH7FA' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Really cool WWII fortification — multi-level and fully open to explore. Dark rooms, a bit creepy, great for hide-and-seek. The only military base in the continental U.S. that got fired on by a foreign enemy in WWII (a Japanese sub, 1942).</p>
+</div>
+</section>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Cannon Beach</span><span>45 min south</span></div>
+<section class='region' id='cannon-beach'>
+<div class='region-head'>
+<h2 class='region-title'>Cannon Beach &amp; Ecola</h2>
+<svg class='scribble' viewBox='0 0 220 10' width='220' height='10'><path d='M2 6 Q 40 1 80 5 T 160 6 T 218 5' fill='none' stroke='#C25B3A' stroke-width='2.6' stroke-linecap='round'/></svg>
+</div>
+<div class='stop'>
+<h3 class='stop-name'>Cannon Beach &amp; Haystack Rock<a class='mapicon' href='https://maps.app.goo.gl/XvRLAd6P9ztUFd9m9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>The Goonies car-race beach. Walk the sand, gawk at Haystack Rock, poke around the cool shops downtown. One of the most photographed spots on the coast — for a reason.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>10 min — and the drive alone is worth it</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Indian Beach, Ecola State Park<a class='mapicon' href='https://maps.app.goo.gl/Fr2uprT7qTTxmY376' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Walk down to the beach and head for the rocky/boulder areas — great tide pools if you time it right. Way better than Cannon Beach for this (no volunteer monitors shooing you along, far fewer people). This is the “La Push” beach from Twilight.</p>
+</div>
+</section>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Tillamook</span><span>about an hour south — its own day</span></div>
+<section class='region' id='tillamook'>
+<div class='region-head'>
+<h2 class='region-title'>Tillamook</h2>
+<svg class='scribble' viewBox='0 0 220 10' width='220' height='10'><path d='M2 6 Q 40 1 80 5 T 160 6 T 218 5' fill='none' stroke='#C25B3A' stroke-width='2.6' stroke-linecap='round'/></svg>
+</div>
+<div class='stop'>
+<h3 class='stop-name'>Tillamook Creamery<a class='mapicon' href='https://www.google.com/maps/search/?api=1&amp;query=45.4839833,-123.8442545&amp;query_place_id=ChIJkTGfdZ0s61QRmol6Blc8ueM' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>The famous cheese factory. Self-guided tour, cheese tastings, and the famously long ice-cream line (worth it). But the real move: the grilled cheese sandwiches in the cafe — amazing.</p>
+</div>
+</section>
+</div><!--/.coast-regions-->
+</div><!--/.coast-wrap-->
+<footer>
+<button class='print-btn' onclick='window.print()'>print it ↗</button>
+</footer>
+</div>
+<script>
+(function(){
+  var sections=document.querySelectorAll('section[id]');
+  var tabs=document.querySelectorAll('nav.tabs a');
+  var pins=document.querySelectorAll('.map-pin');
+  function setActive(id){
+    tabs.forEach(function(t){t.classList.toggle('active',t.getAttribute('href')==='#'+id);});
+    pins.forEach(function(p){p.classList.toggle('active',p.getAttribute('data-region')===id);});
+  }
+  // An explicit jump pins the highlight to its target, so a short last section
+  // can't be stolen by whatever the bottom of the page happens to show.
+  // The lock releases once scrolling stops; free scrolling then takes over again.
+  var lock=null,idle=null;
+  function lockTo(id){
+    lock=id;setActive(id);
+    clearTimeout(idle);idle=setTimeout(function(){lock=null;},200);
+  }
+  function go(p){
+    var id=p.getAttribute('data-region'),el=document.getElementById(id);
+    if(el){lockTo(id);el.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+  pins.forEach(function(p){
+    p.addEventListener('click',function(){go(p);});
+    p.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '||e.key==='Spacebar'){e.preventDefault();go(p);}
+    });
+  });
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){lockTo(t.getAttribute('href').slice(1));});
+  });
+  // Which section are we on? Deterministic, so the last section still wins
+  // once the page bottoms out and can't scroll any further.
+  function currentId(){
+    var doc=document.documentElement;
+    if(window.innerHeight+window.scrollY>=doc.scrollHeight-4)
+      return sections[sections.length-1].id;
+    var mark=window.scrollY+window.innerHeight*0.35, id=sections[0].id;
+    sections.forEach(function(s){
+      if(s.getBoundingClientRect().top+window.scrollY<=mark)id=s.id;
+    });
+    return id;
+  }
+  var ticking=false;
+  function onScroll(){
+    clearTimeout(idle);idle=setTimeout(function(){lock=null;},200);
+    if(lock||ticking)return;
+    ticking=true;
+    requestAnimationFrame(function(){setActive(currentId());ticking=false;});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  setActive(currentId());
+})();
+</script>
+</body>
+</html>
