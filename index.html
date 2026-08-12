@@ -11,6 +11,23 @@
 :root{
   --paper:#F2E6CB;--ink:#2A2118;--terracotta:#C25B3A;--ochre:#C99A3C;--sage:#6E7F4F;--soft:#7A6A55;
   --sea:#dfe8e0;--land:#f6efdc;--river:#a8c0d4;--riverink:#6f8ba3;
+  --route:#9C7B4E;   /* same brown as the dashed route line on the map */
+  --pad:28px;
+}
+*{box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Spectral',serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:multiply;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+.wrap{position:relative;z-index:2;max-width:1060px;margin:0 auto;padding:64px var(--pad) 64px;}
+
+/* ---------- hero ---------- */
+.hero{padding:14px 0 8px;}
+h1.title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(46px,10vw,88px);line-height:.92;letter-spacing:-.035em;margin:8px 0 0;}
+.wave{display:block;width:100%;height:14px;color:var(--ochre);margin:22px 0 14px;}
+nav.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 6px;}
+nav.tabs a{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;letter-spacing:.02em;color:var(--ink);text-decoration:none;background:#fff8eabd;border:1.5px solid var(--ink);padding:5px 12px;border-radius:2px 10px 2px 10px;}
+nav.tabs a:hover{background:var(--ochre);color:#fff;}
+nav.tabs a.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+
 /* ---------- coast ---------- */
 section.region{padding:34px 0 8px;}
 .region-tag{font-family:'Caveat',cursive;font-size:22px;color:var(--sage);}
