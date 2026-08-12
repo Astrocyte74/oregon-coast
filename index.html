@@ -30,7 +30,6 @@ nav.tabs a.active{background:var(--ink);color:var(--paper);border-color:var(--in
 
 /* ---------- coast ---------- */
 section.region{padding:34px 0 8px;}
-.region-tag{font-family:'Caveat',cursive;font-size:22px;color:var(--sage);}
 .region-head{position:relative;display:inline-block;margin-bottom:4px;}
 h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(30px,5vw,40px);line-height:1;margin:0;letter-spacing:-.02em;text-transform:uppercase;}
 .scribble{display:block;margin-top:2px;}
@@ -41,12 +40,8 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
 .stop::after{content:"";position:absolute;left:16px;top:24px;bottom:-8px;
   border-left:2px dashed var(--route);opacity:.45;}
 .stop:last-child::after{display:none;}
-.stop-time{font-family:'Caveat',cursive;font-size:21px;color:var(--terracotta);display:block;margin-bottom:2px;line-height:1;}
 .stop-name{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:22px;margin:0;letter-spacing:-.01em;}
 .stop-blurb{margin:4px 0 0;font-size:16.5px;max-width:62ch;}
-.maps{display:inline-flex;gap:0 14px;margin-top:6px;}
-.maplink{font-family:'Caveat',cursive;font-size:21px;color:var(--terracotta);text-decoration:none;white-space:nowrap;}
-.maplink:hover{color:var(--ochre);}
 /* a leg of the journey: dashed spine + mode badge + arrowhead into the next stop */
 .connector{
   position:relative;margin:0 0 6px;padding:10px 0 12px 38px;min-height:46px;
@@ -112,7 +107,6 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
   .coast-map{width:300px;max-width:64%;}
   .map-pin .dot{fill:var(--paper) !important;stroke:var(--ink) !important;}
   .map-pin text{fill:var(--ink) !important;}
-  .wed-alert{background:transparent !important;color:var(--ink) !important;border:1.5px solid var(--ink);}
   .print-btn{display:none;}
 }
 footer{margin-top:40px;padding-top:18px;border-top:2px dashed var(--soft);text-align:center;}
@@ -311,7 +305,7 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 </div>
 <div class='stop'>
 <h3 class='stop-name'>Lewis &amp; Clark Interpretive Center<a class='mapicon' href='https://maps.app.goo.gl/sLUKhcub6tNkXhES7' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Park here. Really cool museum about the area and the expedition, and the balcony has amazing views.</p>
+<p class='stop-blurb'>Park here, but save the museum for the last stop. Great little museum, quick to see, about the area, its history and the Lewis &amp; Clark expedition. The balcony has amazing views.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>15-min walk + a climb</span></div>
 <div class='stop'>
@@ -321,22 +315,22 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>short detour off the trail</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Deadman's Cove<a class='mapicon' href='https://maps.app.goo.gl/JeztDEKGcEGnLqvV8' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Off the lighthouse trail — a quiet, driftwood-strewn cove. Worth the scramble down and the climb back out.</p>
+<p class='stop-blurb'>Off the lighthouse trail. Worth the scramble down and the climb back out.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>6 min drive</span></div>
 <div class='stop'>
 <h3 class='stop-name'>North Head Lighthouse<a class='mapicon' href='https://maps.app.goo.gl/5eFYJ42tWiBdJ8R97' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Yes, worth doing even though you JUST did a lighthouse. Easier walk, no real climb. One of the best sunset spots on the peninsula.</p>
+<p class='stop-blurb'>Worth the quick drive and walk even if you just did the other lighthouse. Easier walk, no real climb. Or if you're staying in the area — this is the place to come for a sunset!</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>15 min up the coast</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Cranberry Museum<a class='mapicon' href='https://maps.app.goo.gl/1hk6LdQC3PEoK7Sc6' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>More gift shop than museum, but you can walk around a working cranberry bog — pretty interesting to see how it all works.</p>
+<p class='stop-blurb'>More gift shop than museum, but you can walk around a working cranberry bog.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>5 min drive</span></div>
 <div class='stop'>
-<h3 class='stop-name'>Marsh's Free Museum, Long Beach<a class='mapicon' href='https://maps.app.goo.gl/4qZeWbT4qxV16jPh7' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Long Beach has a nice boardwalk and shops; Marsh's is the must-do — crazy stuff crammed into every corner, including “Jake the Alligator Man.” It's free, it's weird, go in.</p>
+<h3 class='stop-name'>Long Beach<a class='mapicon' href='https://maps.app.goo.gl/4qZeWbT4qxV16jPh7' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Long Beach has a nice boardwalk just off the beach and some good shops; Marsh's is the interesting one, with lots of weird stuff to look at.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-bed'/></svg><span>to stay the night</span></div>
 <div class='stop'>
@@ -344,7 +338,7 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 <p class='stop-blurb'>A great place to stay for a night in the area.</p>
 </div>
 </section>
-<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-bridge'/></svg><span class='to'>Astoria</span><span>cross the river — crazy bridge (it used to be a deadly ferry!)</span></div>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-bridge'/></svg><span class='to'>Astoria</span><span>across the 4-mile-long bridge!</span></div>
 <section class='region' id='astoria'>
 <div class='region-head'>
 <h2 class='region-title'>Astoria</h2>
@@ -352,7 +346,7 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 </div>
 <div class='stop'>
 <h3 class='stop-name'>Astoria Column<a class='mapicon' href='https://maps.app.goo.gl/p8BGnJEGBq9yJwJ77' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Climb the spiral staircase for views over the Columbia mouth, the bridge to Washington, and — on a clear day — Mt. Rainier and Mt. St. Helens. Deer wander the grounds. Buy a wooden glider from the gift shop before you climb — you won't want the stairs twice.</p>
+<p class='stop-blurb'>Good climb up a spiral staircase for views of the area. Probably lower on my list of things to do.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>5 min down the hill</span></div>
 <div class='stop'>
@@ -362,12 +356,12 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>5 min walk along the river</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Riverwalk &amp; Frite &amp; Scoop<a class='mapicon' href='https://maps.app.goo.gl/9o7wvvrovby7HafF9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>The quick visit: stroll the Astoria Riverwalk along the water and grab ice cream at Frite &amp; Scoop.</p>
+<p class='stop-blurb'>Optionally walk along the Astoria Riverwalk. Nice stop for ice cream at Frite &amp; Scoop.</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-walk'/></svg><span>10 min walk</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Pier 39 &amp; Hanthorn Cannery Museum</h3>
-<p class='stop-blurb'>A cool restored 1875 cannery — shops and a small hotel now. If it's quiet you can drive right out onto the pier on a slightly rickety bridge (fun). Free cannery museum inside — quick and genuinely interesting. Sea lions sometimes hang out here.</p>
+<p class='stop-blurb'>An interesting old cannery on the pier — shops and a small hotel now. Depending on how busy it is, you can drive right out onto the pier via a slightly sketchy bridge. The cannery museum is quick and free. Sea lions sometimes hang out here, but we didn't see any last time.</p>
 <span class='pinpair'><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/h3Q2uJgfA6MzeUP28' target='_blank' rel='noopener' aria-label='Pier — open in Maps' title='Pier'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>Pier</i></span><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/wtu5kckq93bMQWx89' target='_blank' rel='noopener' aria-label='Museum — open in Maps' title='Museum'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>Museum</i></span></span>
 </div>
 </section>
@@ -379,12 +373,12 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 </div>
 <div class='stop'>
 <h3 class='stop-name'>Wreck of the Peter Iredale<a class='mapicon' href='https://maps.app.goo.gl/gDjUsHRttY84qKPM6' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>An old shipwreck half-buried in the sand — a 1906 schooner, just the rusted ribs left. Super cool to see. You can drive right on the beach in parts (you could last time, at least — worth checking it's still allowed).</p>
+<p class='stop-blurb'>An old shipwreck from the early 1900s, half-buried in the sand. Last time we were there you could drive on the beach near here, which is kind of fun!</p>
 </div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>7 min away</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Battery Russell<a class='mapicon' href='https://maps.app.goo.gl/iuYziupEZXqxpH7FA' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Really cool WWII fortification — multi-level and fully open to explore. Dark rooms, a bit creepy, great for hide-and-seek. The only military base in the continental U.S. that got fired on by a foreign enemy in WWII (a Japanese sub, 1942).</p>
+<p class='stop-blurb'>Really cool WWII fortification — multi-level and fully open (free) to explore. Dark rooms, a bit creepy, great for hide-and-seek when the kids were little. Apparently it's the only military base in the continental U.S. that got fired on by a foreign enemy in WWII (a Japanese sub).</p>
 </div>
 </section>
 <div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Cannon Beach</span><span>45 min south</span></div>
@@ -395,15 +389,15 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 </div>
 <div class='stop'>
 <h3 class='stop-name'>Cannon Beach &amp; Haystack Rock<a class='mapicon' href='https://maps.app.goo.gl/XvRLAd6P9ztUFd9m9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>The Goonies car-race beach. Walk the sand, gawk at Haystack Rock, poke around the cool shops downtown. One of the most photographed spots on the coast — for a reason.</p>
+<p class='stop-blurb'>The Goonies car-race beach. Walk the sand — this is where we had our sneaker-wave experience — and check out Haystack Rock. There are tide pools, but better ones at the next stop. Nice area to walk around and check out the shops. Very busy around here so parking can be tricky, though the end of August shouldn't be as bad.</p>
 </div>
-<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>10 min — and the drive alone is worth it</span></div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>10 min — the drive alone is worth it</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Indian Beach, Ecola State Park<a class='mapicon' href='https://maps.app.goo.gl/Fr2uprT7qTTxmY376' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>Walk down to the beach and head for the rocky/boulder areas — great tide pools if you time it right. Way better than Cannon Beach for this (no volunteer monitors shooing you along, far fewer people). This is the “La Push” beach from Twilight.</p>
+<p class='stop-blurb'>Walk down to the beach and head for the rocky/boulder areas to the south — great tide pools if you time it right with the tide. Way better than Cannon Beach for this. This is also the “La Push” beach from Twilight. And the drive out there is really fun.</p>
 </div>
 </section>
-<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Tillamook</span><span>about an hour south — its own day</span></div>
+<div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Tillamook</span><span>about an hour south</span></div>
 <section class='region' id='tillamook'>
 <div class='region-head'>
 <h2 class='region-title'>Tillamook</h2>
@@ -411,7 +405,7 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 </div>
 <div class='stop'>
 <h3 class='stop-name'>Tillamook Creamery<a class='mapicon' href='https://www.google.com/maps/search/?api=1&amp;query=45.4839833,-123.8442545&amp;query_place_id=ChIJkTGfdZ0s61QRmol6Blc8ueM' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
-<p class='stop-blurb'>The famous cheese factory. Self-guided tour, cheese tastings, and the famously long ice-cream line (worth it). But the real move: the grilled cheese sandwiches in the cafe — amazing.</p>
+<p class='stop-blurb'>This is a bit out of the way compared to the other sites. Self-guided “tour” (more of a viewing platform with placards to read than a museum). Free cheese samples. The cafe has amazing grilled cheese sandwiches and all the good Tillamook ice cream, of course!</p>
 </div>
 </section>
 </div><!--/.coast-regions-->
