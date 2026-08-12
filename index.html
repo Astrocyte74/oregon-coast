@@ -23,7 +23,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;mix
 .hero{padding:14px 0 8px;}
 h1.title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(46px,10vw,88px);line-height:.92;letter-spacing:-.035em;margin:8px 0 0;}
 .wave{display:block;width:100%;height:14px;color:var(--ochre);margin:22px 0 14px;}
-nav.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 6px;}
+nav.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:26px 0 6px;}
 nav.tabs a{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;letter-spacing:.02em;color:var(--ink);text-decoration:none;background:#fff8eabd;border:1.5px solid var(--ink);padding:5px 12px;border-radius:2px 10px 2px 10px;}
 nav.tabs a:hover{background:var(--ochre);color:#fff;}
 nav.tabs a.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
@@ -64,9 +64,6 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
 .connector.major .to{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;
   font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--terracotta);
   margin-right:9px;white-space:nowrap;}
-.section-break{display:flex;align-items:center;gap:16px;margin:44px 0 6px;}
-.section-break::before,.section-break::after{content:"";flex:1;height:2px;background:repeating-linear-gradient(to right,var(--soft) 0 5px,transparent 5px 10px);}
-.break-label{font-family:'Caveat',cursive;font-size:26px;color:var(--sage);white-space:nowrap;}
 .coast-wrap{display:block;}
 .map-aside{margin:8px 0 18px;}
 .coast-map{display:block;width:250px;max-width:80%;height:auto;margin:0 auto;}
@@ -98,7 +95,6 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
   .wave{margin:12px 0 10px;}
   nav.tabs{display:none;}          /* navigation is useless on paper */
   .map-cap{display:none;}
-  .section-break{margin:24px 0 4px;}
   section.region{padding:20px 0 6px;break-inside:auto;}
   .region-head{break-after:avoid;}
   .stop{break-inside:avoid;}
@@ -142,7 +138,6 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 <h1 class='title'>the Oregon<br>coast.</h1>
 </div>
 <svg class='wave' viewBox='0 0 600 14' preserveAspectRatio='none'><path d='M0 7 Q 25 0 50 7 T 100 7 T 150 7 T 200 7 T 250 7 T 300 7 T 350 7 T 400 7 T 450 7 T 500 7 T 550 7 T 600 7' fill='none' stroke='currentColor' stroke-width='1.6'/></svg>
-<div class='section-break'><span class='break-label'>~ the coast ~</span></div>
 <nav class='tabs'><a href='#cape-disappointment'>Cape Disappointment</a><a href='#astoria'>Astoria</a><a href='#fort-stevens'>Fort Stevens</a><a href='#cannon-beach'>Cannon Beach</a><a href='#tillamook'>Tillamook</a></nav>
 <div class='coast-wrap'>
 <aside class='map-aside' aria-label='Map of the coast'>
