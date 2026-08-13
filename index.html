@@ -125,14 +125,16 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 .ext{width:.8em;height:.8em;display:block;}
 .pinpair{display:inline-flex;align-items:center;gap:16px;margin-top:6px;}
 .mapgroup{display:inline-flex;align-items:center;gap:3px;}
-.pinlab{font-family:'Caveat',cursive;font-size:19px;color:var(--soft);font-style:normal;}</style>
+.pinlab{font-family:'Caveat',cursive;font-size:19px;color:var(--soft);font-style:normal;}
+.credit{font-family:'Caveat',cursive;font-size:18px;color:var(--sage);margin:7px 0 0;}
+.credit .hrt{color:var(--terracotta);}</style>
 </head>
 <body>
 <svg width='0' height='0' style='position:absolute;width:0;height:0;overflow:hidden' aria-hidden='true'><symbol id='i-pin' viewBox='0 0 24 24'><path d='M12 2.2c-4 0-7.2 3.2-7.2 7.2 0 5.4 7.2 12.4 7.2 12.4s7.2-7 7.2-12.4c0-4-3.2-7.2-7.2-7.2z' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'/><circle cx='12' cy='9.4' r='2.5' fill='none' stroke='currentColor' stroke-width='1.8'/></symbol>
 <symbol id='i-walk' viewBox='0 0 24 24'><g fill='currentColor'><ellipse cx='7.8' cy='9.2' rx='3.1' ry='4.5' transform='rotate(-14 7.8 9.2)'/><circle cx='10.3' cy='4' r='1.35'/><ellipse cx='16' cy='16.4' rx='3.1' ry='4.5' transform='rotate(-14 16 16.4)'/><circle cx='18.5' cy='11.2' r='1.35'/></g></symbol>
 <symbol id='i-car' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3.4 15.4 L5 10.6 C5.3 9.9 5.9 9.5 6.6 9.5 L15.3 9.5 C16 9.5 16.6 9.8 17 10.4 L19.6 14.6'/><path d='M3.4 15.4 L20.4 15.4 L20.4 17.8 L3.4 17.8 Z'/><circle cx='7.4' cy='17.8' r='1.9'/><circle cx='16.6' cy='17.8' r='1.9'/></g></symbol>
 <symbol id='i-bed' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M3 18.6 L3 7.4'/><path d='M3 12.2 L15.4 12.2 C18.4 12.2 20.8 13.6 20.8 15.8 L20.8 18.6'/><path d='M3 15.6 L20.8 15.6'/><circle cx='7.6' cy='9.6' r='1.7'/></g></symbol>
-<symbol id='i-bridge' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2.4 17.6 L21.6 17.6'/><path d='M2.6 13.4 C7.2 7.8, 16.8 7.8, 21.4 13.4'/><path d='M7 10.4 L7 17.6'/><path d='M12 8.4 L12 17.6'/><path d='M17 10.4 L17 17.6'/></g></symbol><symbol id='i-ext' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7'/><path d='M15 4h5v5'/><path d='M10 14L20 4'/></g></symbol></svg>
+<symbol id='i-bridge' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2.4 17.6 L21.6 17.6'/><path d='M2.6 13.4 C7.2 7.8, 16.8 7.8, 21.4 13.4'/><path d='M7 10.4 L7 17.6'/><path d='M12 8.4 L12 17.6'/><path d='M17 10.4 L17 17.6'/></g></symbol><symbol id='i-ext' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7'/><path d='M15 4h5v5'/><path d='M10 14L20 4'/></g></symbol><symbol id='i-food' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 3 L5 8.5 C5 10.2 6.3 11.5 8 11.5 C9.7 11.5 11 10.2 11 8.5 L11 3'/><path d='M8 11.5 L8 21'/><path d='M17.6 21 L17.6 3 C15.7 5.2 15.2 8.6 15.7 11.2 C15.9 12.3 16.6 12.9 17.6 12.9'/></g></symbol></svg>
 <div class='wrap'>
 <div class='hero'>
 <h1 class='title'>the Oregon<br>coast.</h1>
@@ -386,10 +388,23 @@ h3.stop-name .pin{width:.8em;height:.8em;}
 <h3 class='stop-name'>Cannon Beach &amp; Haystack Rock<a class='mapicon' href='https://maps.app.goo.gl/XvRLAd6P9ztUFd9m9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
 <p class='stop-blurb'>The Goonies car-race beach. Walk the sand — this is where we had our sneaker-wave experience — and check out Haystack Rock. There are tide pools, but better ones at the next stop. Nice area to walk around and check out the shops. Very busy around here so parking can be tricky, though the end of August shouldn't be as bad.</p>
 </div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-food'/></svg><span>in town</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Where to Eat</h3>
+<p class='stop-blurb'>Pelican Brewing for fish and chips, or the Wayfarer for a nicer dinner.</p>
+<span class='pinpair'><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/Yk9E61K3MJrQb2eY9' target='_blank' rel='noopener' aria-label='Pelican Brewing — open in Maps' title='Pelican Brewing'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>Pelican Brewing</i></span><span class='mapgroup'><a class='mapicon' href='https://maps.app.goo.gl/PBPtae3pr4E9LUM58' target='_blank' rel='noopener' aria-label='The Wayfarer — open in Maps' title='The Wayfarer'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a><i class='pinlab'>The Wayfarer</i></span></span>
+<p class='credit'><span class='hrt'>♥</span> Thanks to M &amp; K for the recommendation!</p>
+</div>
 <div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>10 min</span></div>
 <div class='stop'>
 <h3 class='stop-name'>Indian Beach, Ecola State Park<a class='mapicon' href='https://maps.app.goo.gl/Fr2uprT7qTTxmY376' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
 <p class='stop-blurb'>Walk down to the beach and head for the rocky/boulder areas to the south — great tide pools if you time it right with the tide. Way better than Cannon Beach for this. This is also the “La Push” beach from Twilight. And the drive out there is really fun.</p>
+</div>
+<div class='connector'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span>15 min south of Cannon Beach</span></div>
+<div class='stop'>
+<h3 class='stop-name'>Short Sand Beach, Oswald West<a class='mapicon' href='https://maps.app.goo.gl/f5zEVgX5bGHWaicR9' target='_blank' rel='noopener' aria-label='Open in Maps' title='Open in Maps'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg></a></h3>
+<p class='stop-blurb'>Nice walk through the old-growth forest to a cove where a stream runs into the ocean. Tide pools at low tide.</p>
+<p class='credit'><span class='hrt'>♥</span> Thanks to M &amp; K for this one too!</p>
 </div>
 </section>
 <div class='connector major'><svg class='mode' aria-hidden='true'><use href='#i-car'/></svg><span class='to'>Tillamook</span><span>about an hour south</span></div>
