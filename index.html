@@ -104,7 +104,7 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
   .map-pin .dot{fill:var(--paper) !important;stroke:var(--ink) !important;}
   .map-pin text{fill:var(--ink) !important;}
   .print-btn{display:none;}
-  .mapsheet{display:none !important;}
+  .mapsheet,.maptoggle{display:none !important;}
 }
 footer{margin-top:40px;padding-top:18px;border-top:2px dashed var(--soft);text-align:center;}
 .print-btn{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;background:var(--terracotta);color:#fff;border:none;padding:9px 16px;border-radius:2px 10px 2px 10px;cursor:pointer;}
@@ -143,11 +143,19 @@ h3.stop-name .pin{width:.8em;height:.8em;}
     -webkit-overflow-scrolling:touch;scrollbar-width:none;gap:8px;}
   nav.tabs::-webkit-scrollbar{display:none;}
   nav.tabs a{flex:0 0 auto;}
-  .maptoggle{display:inline-flex;align-items:center;gap:5px;flex:0 0 auto;
-    font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;letter-spacing:.02em;
-    color:#fff8ea;background:var(--terracotta);border:1.5px solid var(--terracotta);
-    border-radius:2px 10px 2px 10px;padding:5px 11px;cursor:pointer;}
-  .maptoggle .pin{width:.95em;height:.95em;}
+  /* floats clear of the tab strip entirely, and only shows up once the
+     inline map has scrolled away above you */
+  .maptoggle{display:inline-flex;align-items:center;gap:6px;
+    position:fixed;right:14px;bottom:16px;z-index:20;
+    font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:.02em;
+    color:#fff8ea;background:var(--terracotta);border:1.5px solid var(--ink);
+    border-radius:2px 12px 2px 12px;padding:9px 14px;cursor:pointer;
+    box-shadow:0 3px 0 var(--ink),0 7px 16px rgba(42,33,24,.3);
+    opacity:0;visibility:hidden;transform:translateY(10px);
+    transition:opacity .22s ease,transform .22s ease,visibility .22s;}
+  .maptoggle.show{opacity:1;visibility:visible;transform:none;}
+  .maptoggle:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink),0 4px 10px rgba(42,33,24,.3);}
+  .maptoggle .pin{width:1.05em;height:1.05em;}
   /* land the heading below the sticky bar, not underneath it */
   section.region{scroll-margin-top:58px;}
 }
@@ -178,7 +186,6 @@ nav.tabs a:active{transform:translateY(1px);}
 <svg class='wave' viewBox='0 0 600 14' preserveAspectRatio='none'><path d='M0 7 Q 25 0 50 7 T 100 7 T 150 7 T 200 7 T 250 7 T 300 7 T 350 7 T 400 7 T 450 7 T 500 7 T 550 7 T 600 7' fill='none' stroke='currentColor' stroke-width='1.6'/></svg>
 <div class='navbar'>
 <nav class='tabs'><a href='#cape-disappointment'>Cape Disappointment</a><a href='#astoria'>Astoria</a><a href='#fort-stevens'>Fort Stevens</a><a href='#cannon-beach'>Cannon Beach</a><a href='#tillamook'>Tillamook</a></nav>
-<button class='maptoggle' type='button' aria-expanded='false' aria-controls='mapsheet'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg>Map</button>
 </div>
 <div class='coast-wrap'>
 <aside class='map-aside' aria-label='Map of the coast'>
@@ -463,6 +470,7 @@ nav.tabs a:active{transform:translateY(1px);}
 <button class='print-btn' onclick='window.print()'>print it ↗</button>
 </footer>
 </div>
+<button class='maptoggle' type='button' aria-expanded='false' aria-controls='mapsheet'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg>Map</button>
 <div class='mapsheet' id='mapsheet' role='dialog' aria-modal='true' aria-label='Map of the coast' hidden>
 <div class='mapsheet-inner'>
 <button class='mapsheet-close' type='button' aria-label='Close map'>&#215;</button>
@@ -513,12 +521,18 @@ nav.tabs a:active{transform:translateY(1px);}
   var toggle=document.querySelector('.maptoggle');
   var closeBtn=sheet.querySelector('.mapsheet-close');
   var lastFocus=null;
+  function updateFab(){
+    if(!toggle)return;
+    var pastMap=mapHome.getBoundingClientRect().bottom<8;
+    toggle.classList.toggle('show',pastMap&&sheet.hidden);
+  }
   function openSheet(){
     lastFocus=document.activeElement;
     sheetBody.appendChild(mapSvg);          // move, don't clone - keeps ids + handlers
     sheet.hidden=false;
     toggle.setAttribute('aria-expanded','true');
     document.body.style.overflow='hidden';
+    updateFab();
     closeBtn.focus();
   }
   function closeSheet(){
@@ -527,6 +541,7 @@ nav.tabs a:active{transform:translateY(1px);}
     sheet.hidden=true;
     toggle.setAttribute('aria-expanded','false');
     document.body.style.overflow='';
+    updateFab();
     if(lastFocus&&lastFocus.focus)lastFocus.focus();
   }
   toggle.addEventListener('click',openSheet);
@@ -556,13 +571,18 @@ nav.tabs a:active{transform:translateY(1px);}
   var ticking=false;
   function onScroll(){
     clearTimeout(idle);idle=setTimeout(function(){lock=null;},200);
-    if(lock||ticking)return;
+    if(ticking)return;
     ticking=true;
-    requestAnimationFrame(function(){setActive(currentId());ticking=false;});
+    requestAnimationFrame(function(){
+      if(!lock)setActive(currentId());
+      updateFab();
+      ticking=false;
+    });
   }
   window.addEventListener('scroll',onScroll,{passive:true});
   window.addEventListener('resize',onScroll);
   setActive(currentId());
+  updateFab();
 })();
 </script>
 </body>
