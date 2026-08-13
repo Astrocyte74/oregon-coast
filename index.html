@@ -103,12 +103,8 @@ h2.region-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;fon
   .coast-map{width:300px;max-width:64%;}
   .map-pin .dot{fill:var(--paper) !important;stroke:var(--ink) !important;}
   .map-pin text{fill:var(--ink) !important;}
-  .print-btn{display:none;}
   .mapsheet,.maptoggle{display:none !important;}
 }
-footer{margin-top:40px;padding-top:18px;border-top:2px dashed var(--soft);text-align:center;}
-.print-btn{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:13px;background:var(--terracotta);color:#fff;border:none;padding:9px 16px;border-radius:2px 10px 2px 10px;cursor:pointer;}
-.print-btn:hover{background:var(--ochre);}
 @media (max-width:560px){
   :root{--pad:18px;}
   .wrap{padding:44px var(--pad) 56px;}
@@ -466,9 +462,6 @@ nav.tabs a:active{transform:translateY(1px);}
 </section>
 </div><!--/.coast-regions-->
 </div><!--/.coast-wrap-->
-<footer>
-<button class='print-btn' onclick='window.print()'>print it ↗</button>
-</footer>
 </div>
 <button class='maptoggle' type='button' aria-expanded='false' aria-controls='mapsheet'><svg class='pin' aria-hidden='true'><use href='#i-pin'/></svg>Map</button>
 <div class='mapsheet' id='mapsheet' role='dialog' aria-modal='true' aria-label='Map of the coast' hidden>
