@@ -15,11 +15,11 @@ separate deploy step and no Cloudflare involvement.
 | Machine | Path |
 |---|---|
 | mac16 | `~/16projects/wedding/oregon-coast` |
-| main-mac | `~/projects/oregon-coast-public` |
+| main-mac | `~/projects/wedding/oregon-coast` |
 
 GitHub (`Astrocyte74/oregon-coast`, public) is the single source of truth.
 (An old dev copy at `~/projects/GLM/oregon_coast` on main-mac was deleted
-2026-08-15 — don't try to resurrect it.)
+2026-08-15; the main-mac copy was later moved to `~/projects/wedding/oregon-coast`.)
 
 ## Required routine
 
